@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3242794192559173184}
   m_Layer: 11
   m_Name: _ElectroBall
-  m_TagString: Untagged
+  m_TagString: Carryable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2109816483
   m_SortingLayer: 6
-  m_SortingOrder: 0
+  m_SortingOrder: 1000
   m_Sprite: {fileID: -5668795816437387859, guid: 9b4848ed4e0951642b94bb5ab30ab81a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -172,7 +172,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5548722693371402429}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 962faf7c1fc65a84cb12bdb3dd8f2eac, type: 2}
   m_CullingMode: 0
@@ -195,8 +195,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a668bef356018734a802bb2196a2a185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToWait: 0.79
-  releaseForce: 1.59
+  rigidbody: {fileID: 0}
+  collider: {fileID: 0}
+  transform: {fileID: 0}
   charge: 1
 --- !u!58 &5548722693371402426
 CircleCollider2D:

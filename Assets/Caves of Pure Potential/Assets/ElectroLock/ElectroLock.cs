@@ -22,7 +22,7 @@ public class ElectroLock : MonoBehaviour {
         // if (!(Mathf.Abs( - slider.value)))
     }
 
-    // CheckDone is called once per frame
+    // updateQuest is called once per frame
     private void Update() {
         if (!(Mathf.Abs(charge - slider.value) < acceptableSliderChargeDifference)) {
             if (charge > slider.value) {
@@ -45,6 +45,11 @@ public class ElectroLock : MonoBehaviour {
         if (ball != null) {
             charge += ball.charge;
             ball.Use();
+            Vector3 startScale = ball.transform.localScale;
+            LeanTween.value(this.gameObject, f => { ball.transform.localScale = startScale * f;}, 1, 0, 0.5f)
+                .setOnComplete(() => {
+                    ball.gameObject.SetActive(false);
+                });
         }
     }
 

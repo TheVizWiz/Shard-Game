@@ -63,6 +63,11 @@ public abstract class AbilityController : MonoBehaviour {
 
     public int Upgrade() => upgradeLevel++;
 
+
+    public virtual void OnSwitchScenes() {
+        
+    }
+
     public virtual void OnPlayerCollisionEnter2D(Collision2D collision) {
     }
 

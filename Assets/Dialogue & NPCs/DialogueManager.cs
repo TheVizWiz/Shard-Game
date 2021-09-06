@@ -58,8 +58,8 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
     public void Interact() {
         if (!canInteract) return;
         if (currentPosition == DialogueManagerPosition.HiddenPosition) {
-            Show();
             GameManager.playerMovement.input.Player.Disable();
+            Show();
             return;
         }
 
@@ -103,6 +103,7 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
         activeDialogue?.ResetLines();
         activeDialogue = null;
         hideEvent.Invoke();
+        GameManager.playerMovement.input.Player.Enable();
         MovePosition(DialogueManagerPosition.HiddenPosition);
     }
 
@@ -145,8 +146,8 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
         this.npc = npc;
         activeDialogue = npc.ActivateDialogue();
         if (activeDialogue == null) return false;
-        npcName.text = npc.name;
-        npcDescription.text = npc.description;
+        npcName.text = npc.displayNames[GameManager.language];
+        npcDescription.text = npc.descriptions[GameManager.language];
         selectedOption = false;
         dialogueText.text = "";
         return true;
@@ -195,7 +196,7 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
             Button button = optionObject.GetComponent<Button>();
             button.onClick.AddListener(delegate { ChooseOption(text); });
             button.Select();
-            text.text = option.displayString;
+            text.text = option.displayStrings[GameManager.language];
         }
 
         optionsAreShown = true;
@@ -213,7 +214,7 @@ public class DialogueManager : MonoBehaviour, IAnimatedUI, IInteractable {
         if (ableToPickOption) {
             animationRoutine = StartCoroutine(AnimateText(activeDialogue.GetNextLine(), 0));
         } else {
-            animationRoutine = StartCoroutine(AnimateText(npc.autoDeclineMessage, 0));
+            animationRoutine = StartCoroutine(AnimateText(npc.autoDeclineMessages[GameManager.language], 0));
             activeDialogue.ClearLines();
         }
     }

@@ -27,7 +27,7 @@ public static class SaveManager {
     /// <returns>true if the process was completed successfully, false otherwise</returns>
     public static bool SaveSaveObject<T>(string path, SaveObject<T> o) {
         string parent = Path.GetDirectoryName(Path.Combine(Application.persistentDataPath, path));
-        if (!Directory.Exists(parent)) Directory.CreateDirectory(parent);
+        if (!Directory.Exists(parent)) Directory.CreateDirectory(parent ?? string.Empty);
         Debug.Log(Path.Combine(Application.persistentDataPath, path));
         FileStream stream = new FileStream(Path.Combine(Application.persistentDataPath, path), FileMode.OpenOrCreate);
         formatter.Serialize(stream, o);

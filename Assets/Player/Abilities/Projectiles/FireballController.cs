@@ -30,7 +30,7 @@ public class FireballController : MonoBehaviour {
         isTargeting = true;
     }
 
-    // CheckDone is called once per frame
+    // updateQuest is called once per frame
     private void Update() {
         if (Input.GetKeyDown("1")) {
             StartTracking(Vector2.right * startVelocity);

@@ -1,11 +1,21 @@
 ﻿{
   "name": "Tester Quest",
-  "description": "This is the first testing quest",
+  "descriptions": {
+    "en": "Test Quest"
+  },
+  "displayNames": {
+    "en": "What is this?"
+  },
   "startStepString": "step 1",
   "stepList": [
     {
       "name": "step 1",
-      "description": "this is the first step",
+      "displayNames": {
+        "en": "Step 1"
+      },
+      "descriptions": {
+        "en": "This is the First Step"
+      },
       "transitions": [
         {
           "endQuest": "step 2",
@@ -32,7 +42,12 @@
     },
     {
       "name": "step 2",
-      "description": "this is the second step",
+      "descriptions": {
+        "en": "This is the Second Step"
+      },
+      "displayNames": {
+        "en": "Second Step"
+      },
       "transitions": [
         {
           "endQuest": "",

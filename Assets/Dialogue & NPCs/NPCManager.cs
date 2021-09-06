@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 
@@ -16,5 +18,4 @@ public class NPCManager {
             npcs.Add(npc.name, npc);
         }
     }
-
 }

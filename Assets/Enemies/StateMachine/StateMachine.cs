@@ -5,26 +5,29 @@ using Random = System.Random;
 
 public class StateMachine : MonoBehaviour {
 
-    protected List<Transition> transitions;
+    protected List<StateTransition> transitions;
     protected Dictionary<string, IState> states;
     protected IState activeState;
     protected IState startState;
     protected double randomFloat;
     private Random randomGen;
 
-    protected virtual void Start() { 
+
+    private bool started = false;
+
+    public void Start () {
         activeState = startState;
-        transitions = new List<Transition>();
+        transitions = new List<StateTransition>();
         states = new Dictionary<string, IState>();
         randomGen = new Random();
         randomFloat = randomGen.NextDouble();
     }
 
-    protected virtual void Update() {
+    public virtual void Update() {
 
         activeState.Update();
 
-        foreach (Transition transition in transitions) {
+        foreach (StateTransition transition in transitions) {
             if ((transition.GetStartState() == activeState || transition.GetStartState() == IState.ANY_STATE) && transition.CheckCondition()) {
                 randomFloat = randomGen.NextDouble();
                 activeState.OnExit();
@@ -32,7 +35,6 @@ public class StateMachine : MonoBehaviour {
                 activeState.OnEnter();
             }
         }
-        
     }
 
     protected IState GetState(string key) {
@@ -47,6 +49,10 @@ public class StateMachine : MonoBehaviour {
         startState = state;
         activeState = state;
         state.OnEnter();
+    }
+
+    protected void AddTransition(StateTransition stateTransition) {
+        this.transitions.Add(stateTransition);
     }
     
     

@@ -7,12 +7,12 @@ using Debug = UnityEngine.Debug;
 
 [Serializable]
 public class Quest {
-    
     public string name;
-    public string description;
-    public string startStepString;
+    public string startStepString; 
     public QuestStep currentStep, startStep;
     public List<QuestStep> stepList;
+    public Dictionary<string, string> displayNames;
+    public Dictionary<string, string> descriptions;
     private Dictionary<string, QuestStep> steps;
 
     static Quest() {
@@ -33,25 +33,25 @@ public class Quest {
     /// checks if quest is finished or not
     /// </summary>
     /// <returns>false if quest is not done, true if quest is done</returns>
-    public bool CheckDone() {
+    public bool updateQuest() {
         string s = currentStep.CheckTransition();
         if (s == "") {
             currentStep = null;
             return true;
-        } else if (s != null) {
-            currentStep = steps[s];
-            return false;
         }
+
+        if (s == null) return false;
+
+
+        currentStep = steps[s];
         return false;
-        // QuestStep newStep = currentStep.CheckTransition();
-        
-        // currentStep = newStep;
-        
-        if (currentStep == null) {
-            return true;
-        } else {
-            return false;
-        }
+    }
+
+    public static Quest LoadQuestFromJSON(string filePath) {
+        // Debug.Log(filePath);
+        Quest quest = JsonUtility.FromJson<Quest>(Resources.Load<TextAsset>(filePath).text);
+        quest.Initialize();
+        return quest;
     }
 
     public void EndQuest() {
@@ -63,50 +63,39 @@ public class Quest {
         foreach (QuestStep step in stepList) {
             steps.Add(step.name, step);
         }
+
         startStep = steps[startStepString];
         currentStep = startStep;
-    }
-    
-    public static Quest LoadQuestFromJSON(string filePath) {
-        // Debug.Log(filePath);
-        Quest quest = JsonUtility.FromJson<Quest>(Resources.Load<TextAsset>(filePath).text);
-        quest.Initialize();
-        return quest;
-    } 
-
-
-    public override string ToString() {
-        string s = "";
-        s += name + "\t" + description + "\n";
-        s += startStep.ToString();
-        return s;
     }
 
     public void SetCurrentStep(string s) {
         currentStep = steps[s];
     }
+
+    public string GetDisplayName() {
+        return displayNames[GameManager.language];
+    }
+
+    public string GetName() {
+        return name;
+    }
+
+    public string GetDescription() {
+        return descriptions[GameManager.language];
+    }
 }
 
 [Serializable]
 public class QuestStep {
-
     public string name;
-    public string description;
+    public Dictionary<string, string> displayNames;
+    public Dictionary<string, string> descriptions;
     public List<QuestTransition> transitions;
 
     public QuestStep() {
         transitions = new List<QuestTransition>();
-    }
-
-    public QuestStep(string name) {
-        this.name = name;
-        this.transitions = new List<QuestTransition>();
-    }
-
-    public QuestStep(string name, string description) {
-        this.name = name;
-        this.description = description;
-        transitions = new List<QuestTransition>();
+        displayNames = new Dictionary<string, string>();
+        descriptions = new Dictionary<string, string>();
     }
 
     public string CheckTransition() {
@@ -117,8 +106,20 @@ public class QuestStep {
         return null;
     }
 
+    public string GetDisplayName() {
+        return displayNames[GameManager.language];
+    }
+
+    public string GetName() {
+        return name;
+    }
+
+    public string GetDescription() {
+        return displayNames[GameManager.language];
+    }
+
     public override string ToString() {
-        string s = name + "\t" + description;
+        string s = displayNames[GameManager.language] + "\t" + descriptions[GameManager.language];
         if (transitions.Count == 0) return s;
         foreach (QuestTransition transition in transitions) {
             s += "\n\t" + transition.ToString();
@@ -148,6 +149,7 @@ public class QuestTransition {
                 return false;
             }
         }
+
         DoTransition();
         return true;
     }

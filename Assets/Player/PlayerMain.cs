@@ -15,6 +15,9 @@ public class PlayerMain : MonoBehaviour {
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI manaText;
 
+    public SpriteRenderer spriteRenderer;
+    public GameObject raycastPosition;
+
 
     public float health;
     public float mana;
@@ -33,14 +36,19 @@ public class PlayerMain : MonoBehaviour {
         manaBar.min = 0;
         healthBar.max = maxHealth;
         healthBar.min = 0;
-        manaBar.SetCurrentValue(maxMana, true);
-        healthBar.SetCurrentValue(maxHealth, true);
+        manaBar.SetCurrentValue(maxMana);
+        healthBar.SetCurrentValue(maxHealth);
 
     }
     
     public void Update() {
     }
 
+    /// <summary>
+    /// Tries to use a given amount of Mana
+    /// </summary>
+    /// <param name="amount">The amount of mana to use</param>
+    /// <returns>Whether or not the use was successful. If unsuccessful, will not use any mana.</returns>
     public bool UseMana(float amount) {        
         if (mana < amount) return false;
         mana -= amount;
@@ -88,12 +96,12 @@ public class PlayerMain : MonoBehaviour {
     public void UpdateHealthUI() {
         // healthBar.SetMax(maxHealth);
         // manaBar.SetMax(maxMana);
-        healthBar.SetCurrentValue(health, false);
+        healthBar.SetCurrentValue(health);
         HealthText.text = (int) health + "/" + (int) maxHealth;
     }
 
     public void UpdateManaUI() {
-        manaBar.SetCurrentValue(mana, false);
+        manaBar.SetCurrentValue(mana);
         ManaText.text = (int) mana + "/" + (int) maxMana;
     }
 

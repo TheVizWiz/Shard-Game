@@ -58,40 +58,43 @@ public class ProgressBar : MonoBehaviour, IProgressBar {
         this.min = min;
     }
 
-    public void SetCurrentValue(float newVal, bool checkBounds) {
-        checkBounds = true;
+    public void SetCurrentValue(float newVal) {
+        // checkBounds = true;
         if ((newVal > max || newVal < min)) {
             print("new value out of bounds");
             return;
         }
-        if (isChanging) {
-            if (hasWaitTime) {
-                timeWaited = 0;
-                initializedWait = false;
-            }
 
-            if (type == ProgressBarType.TrailOnDecrease) {
-                if (currentBarPosition < newVal) {
-                    StopCoroutine(currentCoRoutine); 
-                    currentCoRoutine = ChangeValues(newVal);
-                    StartCoroutine(currentCoRoutine);
-                } else {
-                    current = newVal;
-                    timeMoved = 0;
-                }
-            } else if (type == ProgressBarType.TrailOnIncrease) {
-                if (currentBarPosition > newVal) {
-                    StopCoroutine(currentCoRoutine);
-                        currentCoRoutine = ChangeValues(newVal);
-                        StartCoroutine(currentCoRoutine);
-                } else {
-                    current = newVal;
-                    timeMoved = 0;
-                } 
-            }
-        } else {
+        if (!isChanging) {
             currentCoRoutine = ChangeValues(newVal);
             StartCoroutine(currentCoRoutine);
+            return;
+        }
+
+        if (hasWaitTime) {
+            timeWaited = 0;
+            initializedWait = false;
+        }
+
+        switch (type) {
+            case ProgressBarType.TrailOnDecrease when currentBarPosition < newVal:
+                StopCoroutine(currentCoRoutine);
+                currentCoRoutine = ChangeValues(newVal);
+                StartCoroutine(currentCoRoutine);
+                break;
+            case ProgressBarType.TrailOnDecrease:
+                current = newVal;
+                timeMoved = 0;
+                break;
+            case ProgressBarType.TrailOnIncrease when currentBarPosition > newVal:
+                StopCoroutine(currentCoRoutine);
+                currentCoRoutine = ChangeValues(newVal);
+                StartCoroutine(currentCoRoutine);
+                break;
+            case ProgressBarType.TrailOnIncrease:
+                current = newVal;
+                timeMoved = 0;
+                break;
         }
     }
 
@@ -116,18 +119,19 @@ public class ProgressBar : MonoBehaviour, IProgressBar {
 
             if (!initializedWait && hasWaitTime) {
                 initializedWait = true;
-                if (type == ProgressBarType.TrailOnDecrease) {
-                    if (temporaryStartPoint > newVal) {
+                switch (type) {
+                    case ProgressBarType.TrailOnDecrease when temporaryStartPoint > newVal:
                         frontBar.fillAmount = (current - min) / (max - min);
-                    } else {
+                        break;
+                    case ProgressBarType.TrailOnDecrease:
                         timeWaited = waitTime + 1;
-                    }
-                } else if (type == ProgressBarType.TrailOnIncrease) {
-                    if (temporaryStartPoint < newVal) {
+                        break;
+                    case ProgressBarType.TrailOnIncrease when temporaryStartPoint < newVal:
                         backBar.fillAmount = (current - min) / (max - min);
-                    } else {
+                        break;
+                    case ProgressBarType.TrailOnIncrease:
                         timeWaited = waitTime + 1;
-                    }
+                        break;
                 }
             }
 
@@ -147,15 +151,22 @@ public class ProgressBar : MonoBehaviour, IProgressBar {
                 
                 fill = (currentBarPosition - min) / (max - min);
 
-                if (type == ProgressBarType.TrailOnDecrease) {
-                    backBar.fillAmount = fill;
-                    if (temporaryStartPoint < newVal) {
-                        frontBar.fillAmount = fill;
-                    }
-                } else if (type == ProgressBarType.TrailOnIncrease) {
-                    frontBar.fillAmount = fill;
-                    if (temporaryStartPoint > newVal) {
+                switch (type) {
+                    case ProgressBarType.TrailOnDecrease: {
                         backBar.fillAmount = fill;
+                        if (temporaryStartPoint < newVal) {
+                            frontBar.fillAmount = fill;
+                        }
+
+                        break;
+                    }
+                    case ProgressBarType.TrailOnIncrease: {
+                        frontBar.fillAmount = fill;
+                        if (temporaryStartPoint > newVal) {
+                            backBar.fillAmount = fill;
+                        }
+
+                        break;
                     }
                 }
                 yield return null;

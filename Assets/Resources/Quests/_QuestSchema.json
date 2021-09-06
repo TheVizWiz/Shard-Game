@@ -1,16 +1,37 @@
 ﻿{
   "required": [
     "name",
-    "description",
     "startStepString",
-    "stepList"
+    "stepList",
+    "displayNames",
+    "descriptions"
   ],
+  "additionalProperties": false,
   "properties": {
     "name": {
       "type": "string"
     },
-    "description": {
-      "type": "string"
+    "descriptions": {
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      }
+    },
+    "displayNames": {
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      }
     },
     "startStepString": {
       "type": "string"
@@ -21,15 +42,32 @@
         "type": "object",
         "required": [
           "name",
-          "description",
+          "displayNames",
+          "descriptions",
           "transitions"
         ],
+        "additionalProperties": false,
         "properties": {
           "name": {
             "type": "string"
           },
-          "description": {
-            "type": "string"
+          "displayNames":{
+            "type": "object",
+            "required": ["en"],
+            "properties": {
+              "en":{
+                "type": "string"
+              }
+            }
+          },
+          "descriptions": {
+            "type": "object",
+            "required": ["en"],
+            "properties": {
+              "en": {
+                "type": "string"
+              }
+            }
           },
           "transitions": {
             "type": "array",

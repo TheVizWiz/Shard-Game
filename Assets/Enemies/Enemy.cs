@@ -4,6 +4,7 @@ using Interfaces;
 using UnityEngine;
 using UnityEngine.Animations;
 
+[RequireComponent(typeof(Rigidbody2D))] [RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour, IStrikable, ISlashable, IExplodable {
 
     public float health;
@@ -28,7 +29,6 @@ public class Enemy : MonoBehaviour, IStrikable, ISlashable, IExplodable {
     public void Update() {
         weakenTimeLeft -= Time.deltaTime;
         if (weakenTimeLeft <= 0) weakenMultiplier = 0;
-
     }
 
     public bool Explode(float damage, ElementType element) {

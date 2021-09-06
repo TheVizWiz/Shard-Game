@@ -2,14 +2,35 @@
 
 namespace Interfaces {
     
-    public interface ICarryable {
-        void Pickup(Transform carrierTransform, Vector3 offset);
-        void Release();
-    }
+    public class Carryable : MonoBehaviour {
+        
+        [HideInInspector] public new Rigidbody2D rigidbody;
+        [HideInInspector] public new Collider2D collider;
+        [HideInInspector] public new Transform transform;
+    
+        private bool isCarried;
+        
+        public void Start() {
+            isCarried = false; 
+            rigidbody = GetComponent<Rigidbody2D>();
+            collider = GetComponent<Collider2D>();
+            transform = GetComponent<Transform>();
+        }
 
-    public interface ICarrier {
+        public void Update() {
+        }
 
-        Transform GetCarrierTransform();
+        public void Pickup() {
+            isCarried = true;
+            collider.enabled = false;
+            rigidbody.Sleep();
+        }
+
+        public void Release() {
+            isCarried = false;
+            collider.enabled = true;
+            rigidbody.WakeUp();
+        }
     }
 
     public interface IThrowable {
@@ -34,7 +55,7 @@ namespace Interfaces {
     }
 
     public interface IProgressBar {
-        void SetCurrentValue(float newVal, bool checkBounds);
+        void SetCurrentValue(float newVal);
 
         float GetCurrentValue();
     }

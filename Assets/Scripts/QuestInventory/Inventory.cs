@@ -10,11 +10,12 @@ using UnityEngine.Events;
 using UnityEngine.Rendering;
 
 public static class Inventory {
-
+    
     private static Dictionary<string, InventoryItem> items;
     private static SaveObject<InventoryItem> saveObject;
-    private static string itemListPath = "ItemList";
-    private static string PATH = "plinv";
+    
+    private const string PATH = "plinv";
+    private const string itemListPath = "ItemList";
 
     public static UnityEvent changeEvent;
 
@@ -30,9 +31,16 @@ public static class Inventory {
         } else {
             items.Add(item, new InventoryItem(item, amount));
         }
+
         changeEvent.Invoke();
     }
 
+    /// <summary>
+    /// Remove item from inventory
+    /// </summary>
+    /// <param name="item"></param>
+    /// <param name="amount"></param>
+    /// <returns></returns>
     public static bool Discard(string item, int amount) {
         if (!HasValue(item, amount)) return false;
         InventoryItem inventoryItem = items[item];
@@ -42,7 +50,7 @@ public static class Inventory {
             changeEvent.Invoke();
             return true;
         }
-        
+
         return false;
     }
 
@@ -52,7 +60,20 @@ public static class Inventory {
         if (x.amount >= amount) return true;
         else return false;
     }
-    
+
+    /// <summary>
+    /// Amount of given item in inventory.
+    /// </summary>
+    /// <param name="item">the name of the item to be checked</param>
+    /// <returns> -1 if there are none in inventory, else the amount in the inventory</returns>
+    public static int GetAmount(string item) {
+        if (items.TryGetValue(item, out InventoryItem x)) {
+            return x.amount;
+        }
+
+        return 0;
+    }
+
 
     public static void Save() {
         saveObject.AddAll(items);
@@ -66,11 +87,8 @@ public static class Inventory {
             saveObject = new SaveObject<InventoryItem>();
         } else {
             items = saveObject.GetDictionary();
-            
         }
-        
     }
-
 }
 
 [Serializable]
@@ -79,6 +97,9 @@ public class InventoryItem {
     public Sprite image;
     public bool hidden;
     public int amount;
+
+    public InventoryItem() {
+    }
 
     public InventoryItem(string name, Sprite image) {
         this.name = name;
@@ -104,7 +125,7 @@ public class InventoryItem {
         this.amount = amount;
         this.hidden = true;
     }
-    
+
     public bool AddAmount(int a) {
         amount += a;
         return true;

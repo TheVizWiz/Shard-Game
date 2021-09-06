@@ -67,7 +67,7 @@ public class EnterExitArea : MonoBehaviour {
                 break;
             
             case SpawnAreaType.Top:
-                player.SetAnimationBool(PlayerMovement.fallString, true);
+                player.SetAnimationTrigger(PlayerMovement.fallTrigger);
                 player.transform.position = areaPos;
                 player.canMove = true;
                 yield return new WaitForSeconds(moveTime);

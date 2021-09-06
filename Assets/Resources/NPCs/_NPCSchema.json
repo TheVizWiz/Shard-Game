@@ -1,20 +1,47 @@
 ﻿{
   "required": [
     "name",
-    "description",
-    "autoDeclineMessage",
+    "descriptions",
+    "displayNames",
+    "autoDeclineMessages",
     "dialogues"
   ],
-  
   "properties": {
     "name": {
       "type": "string"
     },
-    "description": {
-      "type": "string"
+    "displayNames": {
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      }
     },
-    "autoDeclineMessage": {
-      "type": "string"
+    "descriptions": {
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      }
+    },
+    "autoDeclineMessages": {
+      "type": "object",
+      "required": [
+        "en"
+      ],
+      "properties": {
+        "en": {
+          "type": "string"
+        }
+      }
     },
     "dialogues": {
       "type": "array",
@@ -27,10 +54,18 @@
         ],
         "properties": {
           "lines": {
-            "type": "array",
-            "minItems": 1,
-            "items": {
-              "type": "string"
+            "type": "object",
+            "required": [
+              "en"
+            ],
+            "properties": {
+              "en": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string"
+                }
+              }
             }
           },
           "requirements": {
@@ -59,20 +94,36 @@
             "items": {
               "type": "object",
               "required": [
-                "displayString",
-                "pickStrings",
+                "displayStrings",
+                "optionStrings",
                 "additionItems",
                 "removeItems"
               ],
               "properties": {
-                "displayString": {
-                  "type": "string"
+                "displayStrings": {
+                  "type": "object",
+                  "required": [
+                    "en"
+                  ],
+                  "properties": {
+                    "en": {
+                      "type": "string"
+                    }
+                  }
                 },
-                "pickStrings": {
-                  "type": "array",
-                  "minItems": 1,
-                  "items": {
-                    "type": "string"
+                "optionStrings": {
+                  "type": "object",
+                  "required": [
+                    "en"
+                  ],
+                  "properties": {
+                    "en": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": {
+                        "type": "string"
+                      }
+                    }
                   }
                 },
                 "additionItems": {

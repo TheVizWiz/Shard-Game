@@ -5,7 +5,6 @@ using Interfaces;
 using UnityEngine;
 
 public class NPCBehaviour : MonoBehaviour, IInteractable {
-
     public string name;
     [SerializeField] public Collider2D areaCollider;
     private NPC npc;
@@ -25,11 +24,10 @@ public class NPCBehaviour : MonoBehaviour, IInteractable {
             GameManager.playerMovement.interactable = null;
             GameManager.playerMovement.input.Player.Enable();
         }
-        
     }
 
     public void Interact() {
-GameManager.dialogueManager.Interact();
+        GameManager.dialogueManager.Interact();
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -40,11 +38,10 @@ GameManager.dialogueManager.Interact();
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.CompareTag(GameManager.Constants.PLAYER_TAG) && GameManager.dialogueManager.currentPosition == DialogueManagerPosition.HiddenPosition) {
+        if (other.gameObject.CompareTag(GameManager.Constants.PLAYER_TAG) &&
+            GameManager.dialogueManager.currentPosition == DialogueManagerPosition.HiddenPosition) {
             GameManager.playerMovement.canInteract = false;
             GameManager.dialogueManager.hideEvent.RemoveListener(RestartNPC);
         }
     }
-    
-
 }

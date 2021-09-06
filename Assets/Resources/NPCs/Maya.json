@@ -1,14 +1,26 @@
 ﻿{
   "name": "Maya",
-  "description": "Exiled of the World's End",
-  "autoDeclineMessage": "It seems you are not ready for this. Perhaps another time.",
+  "descriptions": {
+    "en": "Exiled of the World's End"
+  },
+  "autoDeclineMessages": {
+    "en": "It seems you are not ready. Perhaps another time."
+  },
+  "displayNames": {
+    "en": "English Maya"
+  },
   "dialogues": [
     {
-      "lines": [
-        "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
-        "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
-        "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line"
-      ],
+      "lines": {
+        "en": [
+          "This is the first line of the first dialogue",
+          "this is the second line of the first dialogue",
+          "this is the third line of the first dialogue. क्या कहा?"
+        ],
+        "hi": [
+          "क्या कहा?"
+        ]
+      },
       "requirements": [
         {
           "name": "mayastepstarter",
@@ -17,11 +29,15 @@
       ],
       "options": [
         {
-          "displayString": "This is the first option",
-          "pickStrings": [
-            "thank you for picking this option",
-            "this seems to be working quite well."
-          ],
+          "displayStrings": {
+            "en": "This is the first option"
+          },
+          "optionStrings": {
+            "en": [
+              "thank you for picking this option",
+              "this seems to be working quite well."
+            ]
+          },
           "additionItems": [
             {
               "name": "mayasecondstep",
@@ -36,12 +52,16 @@
           ]
         },
         {
-          "displayString": "Second option",
-          "pickStrings": [
-            "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
-            "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line",
-            "this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line this is the second line"
-          ],
+          "displayStrings": {
+            "en": "Second option"
+          },
+          "optionStrings": {
+            "en": [
+              "english second line",
+              "english second line 1",
+              "english second line 2"
+            ]
+          },
           "additionItems": [
             {
               "name": "mayasecondstep",

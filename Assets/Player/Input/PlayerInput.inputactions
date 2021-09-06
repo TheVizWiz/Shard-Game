@@ -52,6 +52,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
+                },
+                {
+                    "name": "Shield",
+                    "type": "Button",
+                    "id": "1015339d-7fda-4a05-8427-79aaf7c8f5a3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Shift",
+                    "type": "Button",
+                    "id": "da4cbb9e-1b93-4a59-b840-527f173bf917",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "Heal",
+                    "type": "Button",
+                    "id": "12a336bf-c4c3-4000-9793-f366f822b1bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press"
                 }
             ],
             "bindings": [
@@ -234,7 +258,7 @@
                 {
                     "name": "",
                     "id": "3c19ae53-a383-43d8-aaa8-723a060415c2",
-                    "path": "<Keyboard>/y",
+                    "path": "<Keyboard>/u",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -256,7 +280,7 @@
                 {
                     "name": "",
                     "id": "f51199c7-5037-4ee8-9ef1-10a6c50b182f",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -278,7 +302,7 @@
                 {
                     "name": "",
                     "id": "0a3d9e35-ee21-45d0-aaef-18e0b3e3f637",
-                    "path": "<Keyboard>/p",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -294,6 +318,72 @@
                     "processors": "",
                     "groups": "Controller",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "daacdf58-7cfc-48dc-b60c-9c5738859535",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e269916-8d73-4fa8-92bf-79c4b60c6ee4",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d04a0501-3797-4961-aa30-9327fe5e5230",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Shift",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4865a97c-751c-4e3a-95ec-598bb5bb2dc6",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Shift",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "59772fd3-bcfd-43d3-a62a-3a0b7445bad5",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "31a610ab-e10a-42c8-8f0b-451eb7882f11",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Heal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -9,25 +9,27 @@ using UnityEngine.PlayerLoop;
 
 [Serializable]
 public class Dialogue {
-    
-    public List<string> lines;
-    public List<string> staticLines;
+    public Dictionary<string, List<string>> lines;
+    public Dictionary<string, List<string>> staticLines;
     public List<DialogueOption> options;
-    // public Dictionary<string, int> requirements;
     public List<InventoryItem> requirements;
 
     private string currentLine;
 
     public Dialogue() {
-        lines = new List<string>();
-        staticLines = new List<string>();
+        lines = new Dictionary<string, List<string>>();
+        staticLines = new Dictionary<string, List<string>>();
         options = new List<DialogueOption>();
         requirements = new List<InventoryItem>();
     }
 
     public string GetNextLine() {
-        string s = lines[0];
-        lines.RemoveAt(0);
+        string s = lines[GameManager.language][0];
+        foreach (List<string> list in lines.Values) {
+            if (list.Count > 0)
+                list.RemoveAt(0);
+        }
+
         currentLine = s;
         return s;
     }
@@ -37,11 +39,11 @@ public class Dialogue {
     }
 
     public bool HasNextLine() {
-        return lines.Count > 0;
+        return lines[GameManager.language].Count > 0;
     }
 
     public bool IsLastLine() {
-        return lines.Count == 0;
+        return lines[GameManager.language].Count == 0;
     }
 
     public void ClearLines() {
@@ -49,41 +51,43 @@ public class Dialogue {
     }
 
     public void ResetLines() {
-        lines.Clear();
-        foreach (string s in staticLines) {
-            lines.Add(s);
+        foreach (List<string> list in lines.Values) {
+            list.Clear();
+        }
+
+        foreach (KeyValuePair<string, List<string>> pair in staticLines) {
+            foreach (string s in pair.Value) {
+                lines[pair.Key].Add(s);
+            }
         }
     }
 
     public void InitializeStaticLines() {
-        foreach (string s  in lines) {
-            staticLines.Add(s);
+        foreach (KeyValuePair<string, List<string>> pair in lines) {
+            foreach (string s in pair.Value) {
+                if (!staticLines.ContainsKey(pair.Key))
+                    staticLines[pair.Key] = new List<string>();
+                staticLines[pair.Key].Add(s);
+            }
         }
     }
 
 
     public bool EndDialogue(string optionPicked) {
         foreach (DialogueOption option in options) {
-            if (option.displayString == optionPicked) {
-                List<string> strings = option.pickStrings;
+            if (option.displayStrings[GameManager.language] == optionPicked) {
+                List<string> strings = option.optionStrings[GameManager.language];
                 foreach (string s in strings) {
-                    this.lines.Add(s);
+                    lines[GameManager.language].Add(s);
                 }
+
                 return option.Finish();
             }
         }
+
         return false;
     }
 
-    /// <summary>
-    /// Loads Dialogue from text file
-    /// Line 1, 2, 3: name, description, # of each: requirements, removals, additions, end options.
-    /// each addition, removal, and requirement consists of an amount and then a name for the given inventoryItem.
-    /// each option consists of a name for the option, followed by how much ever the option costs.
-    /// an option can only cost in a single currency, not multiple different currencies. String for a given option will be added after the option.
-    /// </summary>
-    /// <param name="textLines"></param>
-    /// <param name="start"></param>
 
     public bool CheckReqs() {
         foreach (InventoryItem item in requirements) {
@@ -96,16 +100,15 @@ public class Dialogue {
 
 [Serializable]
 public class DialogueOption {
-
-    public List<string> pickStrings;
-    public string displayString;
+    public Dictionary<string, List<string>> optionStrings;
+    public Dictionary<string, string> displayStrings;
     public List<InventoryItem> additionItems;
     public List<InventoryItem> removeItems;
 
     public DialogueOption() {
         additionItems = new List<InventoryItem>();
         removeItems = new List<InventoryItem>();
-        pickStrings = new List<string>();
+        optionStrings = new Dictionary<string, List<string>>();
     }
 
     public bool Finish() {
@@ -116,7 +119,7 @@ public class DialogueOption {
         foreach (InventoryItem item in removeItems) {
             Inventory.Discard(item.name, item.amount);
         }
-        
+
         foreach (InventoryItem item in additionItems) {
             Inventory.PickUp(item.name, item.amount);
         }
@@ -125,8 +128,6 @@ public class DialogueOption {
     }
 
     public List<string> GetEndStrings() {
-        return pickStrings;
+        return optionStrings[GameManager.language];
     }
 }
-
-

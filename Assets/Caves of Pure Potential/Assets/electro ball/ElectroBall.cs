@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Interfaces;
+using UnityEngine;
 
-public class ElectroBall : Ball {
+public class ElectroBall : Carryable {
     // Start is called before the first frame update
     private Animator animator;
     public float charge;
@@ -18,7 +19,6 @@ public class ElectroBall : Ball {
     public void Use() {
         animator.SetTrigger("Use");
         GetComponent<Collider2D>().enabled = false;
-        used = true;
     }
 
     public void Destroy() {

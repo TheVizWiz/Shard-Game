@@ -2,23 +2,19 @@
 using UnityEngine;
 
 public class DamageBarrier : MonoBehaviour {
-
-    [SerializeField] private GameObject player;
-
+    
     private float distance;
-    private Transform playerTransform;
-    private Transform _transform;
+    private Transform transform;
     // Start is called before the first frame update
     private void Start() {
-        playerTransform = player.transform;
-        _transform = transform;
-        distance = player.transform.position.y - _transform.position.y;
+        transform = gameObject.transform;
+        distance = GameManager.playerMovement.transform.position.y - transform.position.y;
         SaveZoneHandler.barrier = this;
     }
 
-    // CheckDone is called once per frame
+    // updateQuest is called once per frame
     private void Update() {
-        if (playerTransform.position.y - transform.position.y > distance) {
+        if (GameManager.playerMovement.transform.position.y - ((Component) this).transform.position.y > distance) {
             ResetPosition();
         }
     }
@@ -30,7 +26,9 @@ public class DamageBarrier : MonoBehaviour {
     }
 
     public void ResetPosition() {
-        _transform.position = new Vector3(_transform.position.x, playerTransform.position.y - distance,
-            _transform.position.z);
+        var position = transform.position;
+        position = new Vector3(position.x, GameManager.playerMovement.transform.position.y - distance,
+            position.z);
+        transform.position = position;
     }
 }
